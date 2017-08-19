@@ -20,14 +20,18 @@ private slots:
     void preloadMidPart();
     void preloadLastPart();
     void printHeader();
+    void progress(qint64 received, qint64 total);
     void debug(QString str);
     void pause();
 
 signals:
-    void appendPlainText(QString);
+    void updateDebugBar(double);
+    void appendDebugText(QString);
+    void finished();
     void failed();
 
-public slots:
+private:
+    double status = 0;
 };
 
 #endif // PREPROCESSOR_H

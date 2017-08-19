@@ -43,6 +43,8 @@ void DownloadManager::startNextDownload()
     currentDownload = manager.get(request);
     connect(currentDownload, SIGNAL(finished()), SLOT(downloadFinished()));
     connect(currentDownload, SIGNAL(readyRead()), SLOT(downloadReadyRead()));
+    connect(currentDownload, SIGNAL(downloadProgress(qint64, qint64)),
+            SIGNAL(progress(qint64, qint64)));
 }
 
 void DownloadManager::downloadFinished()

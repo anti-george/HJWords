@@ -27,6 +27,7 @@ public:
 signals:
     void finished();
     void failed();
+    void progress(qint64, qint64);
 
 private slots:
     void startNextDownload();
