@@ -19,6 +19,7 @@ Item {
 
         TextArea {
             id: debugArea
+            enabled: false
             Layout.fillHeight: true
             Layout.fillWidth: true
         }

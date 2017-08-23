@@ -9,6 +9,7 @@ Item {
     property alias button3: button3
     property alias textField: textField
     property alias textArea: textArea
+    property alias progressBar: progressBar
 
     width: 360
     height: 640
@@ -24,14 +25,15 @@ Item {
         TextArea {
             id: textArea
             text: qsTr("")
+            enabled: false
             Layout.fillHeight: true
             Layout.fillWidth: true
         }
 
-
         TextField {
             id: textField
             text: qsTr("")
+            enabled: false
             Layout.fillHeight: false
             Layout.fillWidth: true
         }
@@ -71,7 +73,7 @@ Item {
         ProgressBar {
             id: progressBar
             Layout.fillWidth: true
-            value: 0.5
+            value: 0
         }
     }
 }

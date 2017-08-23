@@ -40,8 +40,8 @@ private:
     QNetworkReply *currentDownload;
     QFile output;
 
-    int downloadedCount = 0;
-    int totalCount = 0;
+    qint32 downloadedCount = 0;
+    qint32 totalCount = 0;
 };
 
 #endif
