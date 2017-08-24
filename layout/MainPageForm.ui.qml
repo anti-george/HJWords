@@ -48,24 +48,28 @@ Item {
             Button {
                 id: button0
                 text: qsTr("")
+                enabled: false
                 Layout.fillWidth: true
             }
 
             Button {
                 id: button1
                 text: qsTr("")
+                enabled: false
                 Layout.fillWidth: true
             }
 
             Button {
                 id: button2
                 text: qsTr("")
+                enabled: false
                 Layout.fillWidth: true
             }
 
             Button {
                 id: button3
                 text: qsTr("")
+                enabled: false
                 Layout.fillWidth: true
             }
         }

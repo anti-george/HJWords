@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     QObject::connect(&processor, SIGNAL(updateProgressBar(double)), &layer, SIGNAL(updateProgressBar(double)));
     QObject::connect(&layer, SIGNAL(sendBackText(QString)), &processor, SLOT(receiveText(QString)));
     QObject::connect(&layer, SIGNAL(splashScreen()), &processor, SLOT(splashScreen()));
-    QTimer::singleShot(0, &preload, SLOT(preload()));
+    QObject::connect(&layer, SIGNAL(preload(qint32, qint32, qint32)), &preload, SLOT(preload(qint32, qint32, qint32)));
 
     return app.exec();
 }

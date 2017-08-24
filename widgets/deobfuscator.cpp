@@ -1,6 +1,7 @@
 #include "deobfuscator.h"
 
-Deobfuscator::Deobfuscator(QObject *parent) : QObject(parent)
+Deobfuscator::Deobfuscator(qint32 first, qint32 mid, qint32 last, QObject *parent) :
+    QObject(parent), zipVersion(first), zipNewVersion(mid), bookID(last)
 {
 }
 
@@ -157,6 +158,13 @@ bool Deobfuscator::extractFileList()
     return true;
 }
 
+void Deobfuscator::setVersion(qint32 first, qint32 mid, qint32 last)
+{
+    zipVersion = first;
+    zipNewVersion = mid;
+    bookID = last;
+}
+
 void Deobfuscator::clean()
 {
     QDomDocument doc;
@@ -170,10 +178,20 @@ void Deobfuscator::clean()
         QDomElement from = node.firstChildElement("WordID");
         QDomElement to = node.firstChildElement("Word");
         if (from.isNull() || to.isNull()) continue;
-        if (!QFile::rename("./audio/words/" + from.text() + ".mp3",
-                           "./audio/words/" + to.text() + ".mp3")) emit failed();
-        if (!QFile::rename("./audio/sentences/" + from.text() + ".mp3",
-                           "./audio/sentences/" + to.text() + ".mp3")) emit failed();
+        if (QFileInfo::exists("./audio/words/" + from.text() + ".mp3"))
+        {
+            if (QFileInfo::exists("./audio/words/" + to.text() + ".mp3"))
+                if (!QFile::remove("./audio/words/" + to.text() + ".mp3")) emit failed();
+            if (!QFile::rename("./audio/words/" + from.text() + ".mp3",
+                               "./audio/words/" + to.text() + ".mp3")) emit failed();
+        }
+        if (QFileInfo::exists("./audio/sentences/" + from.text() + ".mp3"))
+        {
+            if (QFileInfo::exists("./audio/sentences/" + to.text() + ".mp3"))
+                if (!QFile::remove("./audio/sentences/" + to.text() + ".mp3")) emit failed();
+            if (!QFile::rename("./audio/sentences/" + from.text() + ".mp3",
+                               "./audio/sentences/" + to.text() + ".mp3")) emit failed();
+        }
     }
     file.close();
 

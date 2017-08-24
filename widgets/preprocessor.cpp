@@ -5,8 +5,9 @@ Preprocessor::Preprocessor(QObject *parent) : QObject(parent)
 {
 }
 
-void Preprocessor::preload()
+void Preprocessor::preload(qint32 zipVersion, qint32 zipNewVersion, qint32 bookID)
 {
+    first = zipVersion; mid = zipNewVersion; last = bookID;
     if ((QDir("./resources")).exists()) QTimer::singleShot(0, this, SLOT(printHeader()));
     else if ((QDir("./audio")).exists()) QTimer::singleShot(0, this, SLOT(preloadLastPart()));
     else QTimer::singleShot(0, this, SLOT(preloadFirstPart()));
@@ -14,10 +15,10 @@ void Preprocessor::preload()
 
 void Preprocessor::preloadFirstPart()
 {
-    debug("HJWords - Resources not found :(");
-    debug("Downloading (41.2 M) ...");
-    Deobfuscator *deobfs = new Deobfuscator;
+    debug("HJWords - Resources Exploded :(");
+    debug("Downloading ...");
     DownloadManager *manager = new DownloadManager;
+    Deobfuscator *deobfs = new Deobfuscator(first, mid, last);
     connect(manager, SIGNAL(progress(qint64, qint64)), this, SLOT(progress(qint64, qint64)));
     connect(manager, SIGNAL(failed()), this, SLOT(pause()));
     connect(manager, SIGNAL(failed()), deobfs, SLOT(deleteLater()));
@@ -30,9 +31,9 @@ void Preprocessor::preloadFirstPart()
 
 void Preprocessor::preloadMidPart()
 {
-    debug("Extracting (50.6 M) ...");
+    debug("Extracting ...");
     QThread *thread = new QThread;
-    Deobfuscator *deobfs = new Deobfuscator;
+    Deobfuscator *deobfs = new Deobfuscator(first, mid, last);
     deobfs->moveToThread(thread);
     connect(thread, SIGNAL(started()), deobfs, SLOT(extractFileList()));
     connect(deobfs, SIGNAL(failed()), this, SLOT(pause()));
@@ -45,9 +46,9 @@ void Preprocessor::preloadMidPart()
 
 void Preprocessor::preloadLastPart()
 {
-    debug("Configuring (54.5 M) ...");
+    debug("Configuring ...");
     QThread *thread = new QThread;
-    Deobfuscator *deobfs = new Deobfuscator;
+    Deobfuscator *deobfs = new Deobfuscator(first, mid, last);
     connect(thread, SIGNAL(started()), deobfs, SLOT(clean()));
     connect(deobfs, SIGNAL(failed()), this, SLOT(pause()));
     connect(deobfs, SIGNAL(failed()), deobfs, SLOT(deleteLater()));
@@ -79,7 +80,7 @@ void Preprocessor::printHeader()
 
 void Preprocessor::pause()
 {
-    debug("\nFailed.");
+    debug("An error occurred ...");
     return;
 }
 

@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QtXml>
 #include <QTime>
+#include <QMediaPlayer>
 
 class Processor : public QObject
 {
@@ -30,9 +31,7 @@ private slots:
 
 private:
     const QString null = "";
-    qint32 progress = 0;
-    qint32 unit = 0;
-    qint32 difficulty = 4;
+    qint32 progress, unit, difficulty, target, times;
     qint32 size = 10;
     QStringList list;
     QVector<qint32> remain;

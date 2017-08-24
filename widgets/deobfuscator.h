@@ -16,13 +16,14 @@ class Deobfuscator: public QObject
     Q_OBJECT
 
 public:
-    explicit Deobfuscator(QObject *parent = nullptr);
+    explicit Deobfuscator(qint32 first, qint32 mid, qint32 last, QObject *parent = nullptr);
 
     QStringList getFileList();
     QStringList getUrlList();
 
 public slots:
     bool extractFileList();
+    void setVersion(qint32 first, qint32 mid, qint32 last);
     void clean();
 
 signals:
@@ -37,9 +38,7 @@ private:
     bool extractFile(QuaZip* zip, QString fileName, QString fileDest, QString filePwd);
     bool removeFile(QStringList listFile);
 
-    const qint32 zipVersion = 1508281615;
-    const qint32 zipNewVersion = 1604271249;
-    const qint32 bookID = 11852;
+    qint32 zipVersion, zipNewVersion, bookID;
 };
 
 #endif // DEOBFUSCATOR_H

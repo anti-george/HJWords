@@ -59,6 +59,16 @@ void Processor::receiveText(QString text)
                 }
                 else unit = text.toInt();
             }
+            else if (difficulty == 4)
+            {
+                QDir dir("./resources");
+                dir.removeRecursively();
+                disableTextField();
+                list.clear();
+                list << null << null << null << null << "Explosion splendide !" << null;
+                updateText(list);
+                return;
+            }
             else unit = qrand() % 100 + 1;
             createTempDict();
         }
@@ -70,12 +80,19 @@ void Processor::receiveText(QString text)
                 progress = 4 * size;
                 appendText("Semble que tout est fini ...");
             }
-            else appendText("Semble incorrect ...");
+            else
+            {
+                QMediaPlayer *player = new QMediaPlayer;
+                appendText("Semble incorrect ...");
+                if (times == 2) player->setMedia(QUrl::fromLocalFile("./resources/sentences/" + dict[target][0] + ".mp3"));
+                else player->setMedia(QUrl::fromLocalFile("./resources/words/" + dict[target][0] + ".mp3"));
+                player->play();
+            }
             return;
         }
 
-        qint32 target = remain[progress] % size;
-        qint32 times = remain[progress] / size;
+        target = remain[progress] % size;
+        times = remain[progress] / size;
 
         if (times == 3)
         {

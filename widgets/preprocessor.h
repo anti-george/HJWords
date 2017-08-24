@@ -13,7 +13,7 @@ public:
     explicit Preprocessor(QObject *parent = nullptr);
 
 public slots:
-    void preload();
+    void preload(qint32 zipVersion, qint32 zipNewVersion, qint32 bookID);
 
 private slots:
     void preloadFirstPart();
@@ -32,6 +32,7 @@ signals:
 
 private:
     double status = 0;
+    qint32 first, mid, last;
 };
 
 #endif // PREPROCESSOR_H

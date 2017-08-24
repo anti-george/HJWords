@@ -1,9 +1,9 @@
-QT += qml quick network xml
+QT += qml quick multimedia network xml
 
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    layer.cpp
+           layer.cpp
 
 RESOURCES += layout/qml.qrc
 
