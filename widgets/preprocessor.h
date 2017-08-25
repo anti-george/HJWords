@@ -13,12 +13,12 @@ public:
     explicit Preprocessor(QObject *parent = nullptr);
 
 public slots:
-    void preload(qint32 zipVersion, qint32 zipNewVersion, qint32 bookID);
+    void load(qint32 zipVersion, qint32 zipNewVersion, qint32 bookID);
 
 private slots:
-    void preloadFirstPart();
-    void preloadMidPart();
-    void preloadLastPart();
+    void loadFirstPart();
+    void loadMidPart();
+    void loadLastPart();
     void progress(qint64 received, qint64 total);
     void printHeader();
     void pause();

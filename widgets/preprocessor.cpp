@@ -1,10 +1,8 @@
 #include "preprocessor.h"
 
-Preprocessor::Preprocessor(QObject *parent) : QObject(parent)
-{
-}
+Preprocessor::Preprocessor(QObject *parent) : QObject(parent) {}
 
-void Preprocessor::preload(qint32 zipVersion, qint32 zipNewVersion, qint32 bookID)
+void Preprocessor::load(qint32 zipVersion, qint32 zipNewVersion, qint32 bookID)
 {
     first = zipVersion; mid = zipNewVersion; last = bookID;
     if (QFileInfo("./resources/index.xml").exists())
@@ -17,7 +15,7 @@ void Preprocessor::preload(qint32 zipVersion, qint32 zipNewVersion, qint32 bookI
         {
             file.close();
             QDir("./resources").removeRecursively();
-            QTimer::singleShot(0, this, SLOT(preloadFirstPart()));
+            QTimer::singleShot(0, this, SLOT(loadFirstPart()));
         }
         else
         {
@@ -28,44 +26,43 @@ void Preprocessor::preload(qint32 zipVersion, qint32 zipNewVersion, qint32 bookI
     else if ((QDir("./audio")).exists())
     {
         QDir("./audio").removeRecursively();
-        QTimer::singleShot(0, this, SLOT(preloadFirstPart()));
+        QTimer::singleShot(0, this, SLOT(loadFirstPart()));
     }
-    else QTimer::singleShot(0, this, SLOT(preloadFirstPart()));
+    else QTimer::singleShot(0, this, SLOT(loadFirstPart()));
 }
 
-void Preprocessor::preloadFirstPart()
+void Preprocessor::loadFirstPart()
 {
-    appendDebugText("HJWords - Resources Exploded :( \nDownloading ...");
+    appendDebugText(tr("HJWords - Resources Exploded :(") + "\n" + tr("Downloading ..."));
     DownloadManager *manager = new DownloadManager;
     Deobfuscator *deobfs = new Deobfuscator(first, mid, last);
     connect(manager, SIGNAL(progress(qint64, qint64)), this, SLOT(progress(qint64, qint64)));
     connect(manager, SIGNAL(failed()), this, SLOT(pause()));
     connect(manager, SIGNAL(failed()), deobfs, SLOT(deleteLater()));
     connect(manager, SIGNAL(failed()), manager, SLOT(deleteLater()));
-    connect(manager, SIGNAL(finished()), this, SLOT(preloadMidPart()));
+    connect(manager, SIGNAL(finished()), this, SLOT(loadMidPart()));
     connect(manager, SIGNAL(finished()), deobfs, SLOT(deleteLater()));
     connect(manager, SIGNAL(finished()), manager, SLOT(deleteLater()));
     manager->append(deobfs->getUrlList());
 }
 
-void Preprocessor::preloadMidPart()
+void Preprocessor::loadMidPart()
 {
-    appendDebugText("Extracting ...");
+    appendDebugText(tr("Configuring ...") + "\n");
     QThread *thread = new QThread;
     Deobfuscator *deobfs = new Deobfuscator(first, mid, last);
     deobfs->moveToThread(thread);
     connect(thread, SIGNAL(started()), deobfs, SLOT(extractFileList()));
     connect(deobfs, SIGNAL(failed()), this, SLOT(pause()));
     connect(deobfs, SIGNAL(failed()), deobfs, SLOT(deleteLater()));
-    connect(deobfs, SIGNAL(finished()), this, SLOT(preloadLastPart()));
+    connect(deobfs, SIGNAL(finished()), this, SLOT(loadLastPart()));
     connect(deobfs, SIGNAL(finished()), deobfs, SLOT(deleteLater()));
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
     thread->start();
 }
 
-void Preprocessor::preloadLastPart()
+void Preprocessor::loadLastPart()
 {
-    appendDebugText("Configuring ...\n");
     QThread *thread = new QThread;
     Deobfuscator *deobfs = new Deobfuscator(first, mid, last);
     connect(thread, SIGNAL(started()), deobfs, SLOT(clean()));
@@ -88,14 +85,14 @@ void Preprocessor::progress(qint64 received, qint64 total)
 
 void Preprocessor::printHeader()
 {
-    appendDebugText("HJWords - Excited Word Tank\n"
-                    "Copyright (C) 2017 Weijia WANG\n"
-                    "Released under GNU LGPL version 3.\n\n");
+    appendDebugText(tr("HJWords - Excited Word Tank") + "\n" +
+                    tr("Copyright (C) 2017 Weijia WANG") + "\n" +
+                    tr("Released under GNU LGPL version 3.") + "\n\n");
     emit finished();
 }
 
 void Preprocessor::pause()
 {
-    appendDebugText("An error occurred ...");
+    appendDebugText(tr("An error has occurred ..."));
     return;
 }

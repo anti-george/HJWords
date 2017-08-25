@@ -19,7 +19,9 @@ signals:
     void updateProgressBar(double value);
     void enableTextField();
     void disableTextField();
-    void preload(qint32 zipVersion, qint32 zipNewVersion, qint32 bookID);
+    void setUnitID(qint32 num);
+    void load(qint32 zipVersion, qint32 zipNewVersion, qint32 bookID);
+    qint32 getUnitID();
 };
 
 #endif // LAYER_H

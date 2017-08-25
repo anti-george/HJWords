@@ -26,7 +26,6 @@ ApplicationWindow {
 
         DebugPage {
         }
-
         MainPage {
         }
     }

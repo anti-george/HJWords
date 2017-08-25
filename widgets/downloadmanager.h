@@ -29,7 +29,7 @@ signals:
     void progress(qint64, qint64);
 
 private slots:
-    void startNextDownload();
+    void downloadNext();
     void downloadFinished();
     void downloadReadyRead();
 

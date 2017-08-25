@@ -2,10 +2,12 @@ QT += qml quick multimedia network xml
 
 CONFIG += c++11
 
-SOURCES += main.cpp \
-           layer.cpp
+SOURCES += \
+    main.cpp \
+    layer.cpp
 
-RESOURCES += layout/qml.qrc
+RESOURCES += layout/qml.qrc \
+    translations/resources.qrc
 
 include(widgets/Widgets.pri)
 
@@ -47,6 +49,11 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_EXTRA_LIBS = \
-        C:/Users/Weijia/Documents/Projects/HJWords/android/lib/armeabi-v7a/libcrypto.so \
+        $$PWD/android/lib/armeabi-v7a/libcrypto.so \
         $$PWD/android/lib/armeabi-v7a/libssl.so
 }
+
+TRANSLATIONS += \
+    translations/fr_FR.ts \
+    translations/zh_CN.ts
+

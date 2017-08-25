@@ -36,8 +36,9 @@ DebugPageForm {
             if (index !== array.data.items.length)
                 get("https://cichang.hjapi.com/v2/book/" + array.data.items[index].id, time)
         } else {
-            compatibility.preload(array.data.sentAudioResource.version,
-                                  array.data.textResource.version, array.data.id)
+            compatibility.setUnitID(array.data.unitCount)
+            compatibility.load(array.data.sentAudioResource.version,
+                               array.data.textResource.version, array.data.id)
         }
     }
 

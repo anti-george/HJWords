@@ -1,8 +1,6 @@
 #include "processor.h"
 
-Processor::Processor(QObject *parent) : QObject(parent)
-{
-}
+Processor::Processor(QObject *parent) : QObject(parent) {}
 
 void Processor::splashScreen()
 {
@@ -27,11 +25,7 @@ void Processor::receiveText(QString text)
     if (progress == 4 * size)
     {
         if (text != list[5] && list[5] != null)
-        {
-            if (difficulty == 3) appendText("NON !!!!!");
-            else appendText("Semble incorrect ...");
-            return;
-        }
+            appendText(difficulty == 3 ? "NON !!!!!" : "Semble incorrect ...");
         else
         {
             list.clear();
@@ -39,6 +33,7 @@ void Processor::receiveText(QString text)
             list << null << null << "Ouais !" << null << "Encore une fois ?" << null;
             updateText(list);
         }
+        return;
     }
     else
     {
@@ -50,7 +45,7 @@ void Processor::receiveText(QString text)
             {
                 if (!unit)
                 {
-                    unit = 666;
+                    unit = unitID + 1;
                     enableTextField();
                     list.clear();
                     list << null << "Soumettre" << null << null << "Maintenant, choisissez le manuel !" << null;
@@ -59,7 +54,7 @@ void Processor::receiveText(QString text)
                 }
                 else unit = text.toInt();
             }
-            else unit = qrand() % 100 + 1;
+            else unit = qrand() % unitID + 1;
             createTempDict();
         }
 
@@ -81,10 +76,10 @@ void Processor::receiveText(QString text)
             }
             else
             {
-                QMediaPlayer *player = new QMediaPlayer;
                 appendText("Semble incorrect ...");
-                if (times == 2) player->setMedia(QUrl::fromLocalFile("./resources/sentences/" + dict[target][0] + ".mp3"));
-                else player->setMedia(QUrl::fromLocalFile("./resources/words/" + dict[target][0] + ".mp3"));
+                QMediaPlayer *player = new QMediaPlayer;
+                QString folder = (times == 2) ? "./resources/sentences/" : "./resources/words/";
+                player->setMedia(QUrl::fromLocalFile(folder + dict[target][0] + ".mp3"));
                 player->play();
             }
             return;
@@ -92,18 +87,15 @@ void Processor::receiveText(QString text)
 
         target = remain[progress] % size;
         times = remain[progress] / size;
+        list.clear();
 
         if (times == 3)
         {
-            list.clear();
             enableTextField();
             list << "Soumettre" << null << null << null << dict[target][1] << dict[target][0];
-            updateProgressBar(0.25 * ++progress / size);
-            updateText(list);
         }
         else
         {
-            list.clear();
             disableTextField();
             QVector<qint32> random;
             while (true)
@@ -151,9 +143,9 @@ void Processor::receiveText(QString text)
                 }
                 break;
             }
-            updateProgressBar(0.25 * ++progress / size);
-            updateText(list);
         }
+        updateProgressBar(0.25 * ++progress / size);
+        updateText(list);
     }
 }
 
@@ -197,4 +189,14 @@ QString Processor::decrypt(QString str)
     QString std = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     for (int i = 0; i < str.length(); ++i) str[i] = std[0x3f - std.indexOf(str[i])];
     return QString::fromUtf8(QByteArray::fromBase64(str.toUtf8()));
+}
+
+void Processor::setUnitID(qint32 num)
+{
+    unitID = num;
+}
+
+qint32 Processor::getUnitID()
+{
+    return unitID;
 }

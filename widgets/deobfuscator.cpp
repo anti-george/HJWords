@@ -1,9 +1,7 @@
 #include "deobfuscator.h"
 
 Deobfuscator::Deobfuscator(qint32 first, qint32 mid, qint32 last, QObject *parent) :
-    QObject(parent), zipVersion(first), zipNewVersion(mid), bookID(last)
-{
-}
+    QObject(parent), zipVersion(first), zipNewVersion(mid), bookID(last) {}
 
 bool Deobfuscator::copyData(QIODevice &inFile, QIODevice &outFile)
 {
@@ -25,19 +23,9 @@ bool Deobfuscator::extractFile(QuaZip* zip, QString fileName, QString fileDest, 
     QuaZipFile inFile(zip);
     if(!inFile.open(QIODevice::ReadOnly,
                     filePwd.toLatin1().data()) || inFile.getZipError()) return false;
-    QDir curDir;
-    if (fileDest.endsWith('/') && !curDir.mkpath(fileDest)) return false;
-    else if (!curDir.mkpath(QFileInfo(fileDest).absolutePath())) return false;
-
-    QuaZipFileInfo64 info;
-    if (!zip->getCurrentFileInfo(&info)) return false;
-
-    QFile::Permissions srcPerm = info.getPermissions();
-    if (fileDest.endsWith('/') && QFileInfo(fileDest).isDir())
-    {
-        if (srcPerm) QFile(fileDest).setPermissions(srcPerm);
-        return true;
-    }
+    QDir dir;
+    if (fileDest.endsWith('/') && !dir.mkpath(fileDest)) return false;
+    else if (!dir.mkpath(QFileInfo(fileDest).absolutePath())) return false;
 
     QFile outFile;
     outFile.setFileName(fileDest);
@@ -47,7 +35,6 @@ bool Deobfuscator::extractFile(QuaZip* zip, QString fileName, QString fileDest, 
 
     inFile.close();
     if (inFile.getZipError()) return false;
-    if (srcPerm) outFile.setPermissions(srcPerm);
     return true;
 }
 
@@ -96,7 +83,8 @@ bool Deobfuscator::extractAll(QString fileCompressed, QString dir)
 
 QStringList Deobfuscator::getFileList()
 {
-    return {QString::number(zipNewVersion) + ".xml.zip", QString::number(zipNewVersion) + ".res.zip",
+    return {QString::number(zipNewVersion) + ".xml.zip",
+            QString::number(zipNewVersion) + ".res.zip",
             QString::number(zipVersion) + ".sentence.zip"};
 }
 
@@ -111,8 +99,8 @@ QStringList Deobfuscator::getUrlList()
 bool Deobfuscator::extractFileList()
 {
     QStringList args = getFileList(), dir {"./audio", "./", "./audio/sentences"};
-    for (int i = 0; i < 3; ++i) if (!extractAll(args.at(i), dir.at(i))) {emit failed(); return false;}
-    emit finished(); return true;
+    for (int i = 0; i < 3; ++i) if (!extractAll(args[i], dir[i])) {failed(); return false;}
+    finished(); return true;
 }
 
 void Deobfuscator::clean()

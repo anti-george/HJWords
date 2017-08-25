@@ -24,6 +24,8 @@ signals:
 public slots:
     void splashScreen();
     void receiveText(QString text);
+    void setUnitID(qint32 num);
+    qint32 getUnitID();
 
 private slots:
     void createTempDict();
@@ -31,8 +33,7 @@ private slots:
 
 private:
     const QString null = "";
-    qint32 progress, unit, difficulty, target, times;
-    qint32 size = 10;
+    qint32 unitID, progress, unit, difficulty, target, times, size = 10;
     QStringList list;
     QVector<qint32> remain;
     QVector<QStringList> dict;

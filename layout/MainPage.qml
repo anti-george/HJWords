@@ -32,7 +32,7 @@ MainPageForm {
         else {
             var num = parseInt(textField.text)
             if (num !== parseFloat(textField.text)) textField.clear()
-            else if (num < 1 || num > 100) textField.clear()
+            else if (num < 1 || num > compatibility.getUnitID()) textField.clear()
             else
             {
                 compatibility.sendBackText(textField.text)
