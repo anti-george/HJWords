@@ -22,7 +22,6 @@ public:
 
     void append(const QUrl &url);
     void append(const QStringList &urlList);
-    QString saveFileName(const QUrl &url);
 
 signals:
     void finished();

@@ -23,8 +23,8 @@ bool Deobfuscator::extractFile(QuaZip* zip, QString fileName, QString fileDest, 
     if (zip->getMode() != QuaZip::mdUnzip) return false;
     if (!fileName.isEmpty()) zip->setCurrentFile(fileName);
     QuaZipFile inFile(zip);
-    if(!inFile.open(QIODevice::ReadOnly, filePwd.toLatin1().data()) || inFile.getZipError()) return false;
-
+    if(!inFile.open(QIODevice::ReadOnly,
+                    filePwd.toLatin1().data()) || inFile.getZipError()) return false;
     QDir curDir;
     if (fileDest.endsWith('/') && !curDir.mkpath(fileDest)) return false;
     else if (!curDir.mkpath(QFileInfo(fileDest).absolutePath())) return false;
@@ -35,38 +35,20 @@ bool Deobfuscator::extractFile(QuaZip* zip, QString fileName, QString fileDest, 
     QFile::Permissions srcPerm = info.getPermissions();
     if (fileDest.endsWith('/') && QFileInfo(fileDest).isDir())
     {
-        if (srcPerm != 0) QFile(fileDest).setPermissions(srcPerm);
+        if (srcPerm) QFile(fileDest).setPermissions(srcPerm);
         return true;
     }
 
     QFile outFile;
     outFile.setFileName(fileDest);
     if(!outFile.open(QIODevice::WriteOnly)) return false;
-
-    if (!copyData(inFile, outFile) || inFile.getZipError())
-    {
-        outFile.close();
-        removeFile(QStringList(fileDest));
-        return false;
-    }
+    if (!copyData(inFile, outFile) || inFile.getZipError()) {outFile.close(); return false;}
     outFile.close();
 
     inFile.close();
-    if (inFile.getZipError())
-    {
-        removeFile(QStringList(fileDest));
-        return false;
-    }
-
-    if (srcPerm != 0) outFile.setPermissions(srcPerm);
+    if (inFile.getZipError()) return false;
+    if (srcPerm) outFile.setPermissions(srcPerm);
     return true;
-}
-
-bool Deobfuscator::removeFile(QStringList listFile)
-{
-    bool ret = true;
-    for (int i = 0; i < listFile.count(); ++i) ret = ret && QFile::remove(listFile.at(i));
-    return ret;
 }
 
 QString Deobfuscator::extractFile(QuaZip &zip, QString fileName, QString fileDest, QString filePwd)
@@ -76,11 +58,7 @@ QString Deobfuscator::extractFile(QuaZip &zip, QString fileName, QString fileDes
     if (!extractFile(&zip, fileName, fileDest, filePwd)) return QString();
 
     zip.close();
-    if (zip.getZipError() != 0)
-    {
-        removeFile(QStringList(fileDest));
-        return QString();
-    }
+    if (zip.getZipError()) return QString();
     return QFileInfo(fileDest).absoluteFilePath();
 }
 
@@ -91,47 +69,35 @@ bool Deobfuscator::extractAll(QuaZip &zip, const QString &dir, QString filePwd)
     QDir directory(dir);
     QStringList extracted;
     if (!zip.goToFirstFile()) return false;
-
     do
     {
         QString name = zip.getCurrentFileName();
         QString absFilePath = directory.absoluteFilePath(name);
         if (absFilePath.startsWith("/")) absFilePath.replace("\\", "/");
-        if (!extractFile(&zip, "", absFilePath, filePwd))
-        {
-            removeFile(extracted);
-            return false;
-        }
+        if (!extractFile(&zip, "", absFilePath, filePwd)) return false;
         extracted.append(absFilePath);
     }
     while (zip.goToNextFile());
 
     zip.close();
-    if (zip.getZipError() != 0)
-    {
-        removeFile(extracted);
-        return false;
-    }
+    if (zip.getZipError()) return false;
     return true;
 }
 
 bool Deobfuscator::extractAll(QString fileCompressed, QString dir)
 {
     QString pwd;
+    QuaZip zip(fileCompressed);
     for (int i = 0; i < 10; ++i) pwd += 0xff - fileCompressed[i].toLatin1();
     pwd = QString(pwd.toLatin1().toBase64());
-    QuaZip zip(fileCompressed);
     if (!(extractAll(zip, dir, pwd))) return false;
     return true;
 }
 
 QStringList Deobfuscator::getFileList()
 {
-    QStringList list;
-    list << QString::number(zipNewVersion) + ".xml.zip"
-         << QString::number(zipNewVersion) + ".res.zip"
-         << QString::number(zipVersion) + ".sentence.zip";
-    return list;
+    return {QString::number(zipNewVersion) + ".xml.zip", QString::number(zipNewVersion) + ".res.zip",
+            QString::number(zipVersion) + ".sentence.zip"};
 }
 
 QStringList Deobfuscator::getUrlList()
@@ -144,25 +110,9 @@ QStringList Deobfuscator::getUrlList()
 
 bool Deobfuscator::extractFileList()
 {
-    QStringList dir, args = getFileList();
-    dir << QString("./audio") << QString("./") << QString("./audio/sentences");
-    for (int i = 0; i < 3; ++i)
-    {
-        if (!extractAll(args.at(i), dir.at(i)))
-        {
-            emit failed();
-            return false;
-        }
-    };
-    emit finished();
-    return true;
-}
-
-void Deobfuscator::setVersion(qint32 first, qint32 mid, qint32 last)
-{
-    zipVersion = first;
-    zipNewVersion = mid;
-    bookID = last;
+    QStringList args = getFileList(), dir {"./audio", "./", "./audio/sentences"};
+    for (int i = 0; i < 3; ++i) if (!extractAll(args.at(i), dir.at(i))) {emit failed(); return false;}
+    emit finished(); return true;
 }
 
 void Deobfuscator::clean()
@@ -170,7 +120,6 @@ void Deobfuscator::clean()
     QDomDocument doc;
     QFile file("./audio/word.txt");
     if (!file.open(QIODevice::ReadOnly) || !doc.setContent(&file)) emit failed();
-
     QDomNodeList bookItem = doc.elementsByTagName("BookItem");
     for (int i = 0; i < bookItem.size(); ++i)
     {
@@ -178,26 +127,22 @@ void Deobfuscator::clean()
         QDomElement from = node.firstChildElement("WordID");
         QDomElement to = node.firstChildElement("Word");
         if (from.isNull() || to.isNull()) continue;
-        if (QFileInfo::exists("./audio/words/" + from.text() + ".mp3"))
+        QStringList folders {"./audio/words/", "./audio/sentences/"};
+        for (QString folder : folders)
         {
-            if (QFileInfo::exists("./audio/words/" + to.text() + ".mp3"))
-                if (!QFile::remove("./audio/words/" + to.text() + ".mp3")) emit failed();
-            if (!QFile::rename("./audio/words/" + from.text() + ".mp3",
-                               "./audio/words/" + to.text() + ".mp3")) emit failed();
-        }
-        if (QFileInfo::exists("./audio/sentences/" + from.text() + ".mp3"))
-        {
-            if (QFileInfo::exists("./audio/sentences/" + to.text() + ".mp3"))
-                if (!QFile::remove("./audio/sentences/" + to.text() + ".mp3")) emit failed();
-            if (!QFile::rename("./audio/sentences/" + from.text() + ".mp3",
-                               "./audio/sentences/" + to.text() + ".mp3")) emit failed();
+            if (QFileInfo::exists(folder + from.text() + ".mp3"))
+            {
+                if (QFileInfo::exists(folder + to.text() + ".mp3"))
+                    if (!QFile::remove(folder + to.text() + ".mp3")) emit failed();
+                if (!QFile::rename(folder + from.text() + ".mp3",
+                                   folder + to.text() + ".mp3")) emit failed();
+            }
         }
     }
     file.close();
 
-    QDir dir;
-    QStringList args = getFileList();
-    for (int i = 0; i < 3; ++i) if (!QFile::remove(args.at(i))) emit failed();
+    QDir dir; QStringList args = getFileList();
+    for (QString file : args) if (!QFile::remove(file)) emit failed();
     if (!QFile::rename("./audio/word.txt", "./audio/index.xml")) emit failed();
     else if (!QFile::remove("./audio/unit.txt")) emit failed();
     else if (!dir.rename("./audio", "./resources")) emit failed();

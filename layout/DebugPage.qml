@@ -5,6 +5,7 @@ DebugPageForm {
         target: compatibility
         onAppendDebugText: debugArea.append(text)
         onUpdateDebugBar: debugBar.value = value
+
     }
 
     function get(url, level, time) {

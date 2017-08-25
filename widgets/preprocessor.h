@@ -19,9 +19,8 @@ private slots:
     void preloadFirstPart();
     void preloadMidPart();
     void preloadLastPart();
-    void printHeader();
     void progress(qint64 received, qint64 total);
-    void debug(QString str);
+    void printHeader();
     void pause();
 
 signals:

@@ -16,52 +16,33 @@ void DownloadManager::append(const QUrl &url)
     ++totalCount;
 }
 
-QString DownloadManager::saveFileName(const QUrl &url)
-{
-    return QFileInfo(url.path()).fileName();
-}
-
 void DownloadManager::startNextDownload()
 {
     if (downloadQueue.isEmpty())
     {
-        if (downloadedCount == totalCount) emit finished();
-        else emit failed();
+        if (downloadedCount != totalCount) emit failed();
+        else emit finished();
         return;
     }
 
     QUrl url = downloadQueue.dequeue();
-    QString filename = saveFileName(url);
+    QString filename = QFileInfo(url.path()).fileName();
     output.setFileName(filename);
-    if (!output.open(QIODevice::WriteOnly))
-    {
-        emit failed();
-        return;
-    }
+    if (!output.open(QIODevice::WriteOnly)) {emit failed(); return;}
 
     QNetworkRequest request(url);
     currentDownload = manager.get(request);
     connect(currentDownload, SIGNAL(finished()), SLOT(downloadFinished()));
     connect(currentDownload, SIGNAL(readyRead()), SLOT(downloadReadyRead()));
-    connect(currentDownload, SIGNAL(downloadProgress(qint64, qint64)),
-            SIGNAL(progress(qint64, qint64)));
+    connect(currentDownload,
+            SIGNAL(downloadProgress(qint64, qint64)), SIGNAL(progress(qint64, qint64)));
 }
 
 void DownloadManager::downloadFinished()
 {
     output.close();
-
-    if (currentDownload->error())
-    {
-        currentDownload->deleteLater();
-        emit failed();
-    }
-    else
-    {
-        ++downloadedCount;
-        currentDownload->deleteLater();
-        startNextDownload();
-    }
+    if (currentDownload->error()) {currentDownload->deleteLater(); failed();}
+    else {++downloadedCount; currentDownload->deleteLater(); startNextDownload();}
 }
 
 void DownloadManager::downloadReadyRead()

@@ -59,16 +59,6 @@ void Processor::receiveText(QString text)
                 }
                 else unit = text.toInt();
             }
-            else if (difficulty == 4)
-            {
-                QDir dir("./resources");
-                dir.removeRecursively();
-                disableTextField();
-                list.clear();
-                list << null << null << null << null << "Explosion splendide !" << null;
-                updateText(list);
-                return;
-            }
             else unit = qrand() % 100 + 1;
             createTempDict();
         }
@@ -79,6 +69,15 @@ void Processor::receiveText(QString text)
             {
                 progress = 4 * size;
                 appendText("Semble que tout est fini ...");
+            }
+            else if (difficulty == 4)
+            {
+                QDir("./resources").removeRecursively();
+                disableTextField();
+                list.clear();
+                list << null << null << null << null << "Explosion splendide !" << null;
+                updateProgressBar(0);
+                updateText(list);
             }
             else
             {
@@ -160,13 +159,13 @@ void Processor::receiveText(QString text)
 
 void Processor::createTempDict()
 {
-    QDomDocument doc;
-    QFile file("./resources/index.xml");
-    if (!file.open(QIODevice::ReadOnly) || !doc.setContent(&file)) emit failed();
     dict.clear();
     remain.clear();
 
     QVector<qint32> temp;
+    QDomDocument doc;
+    QFile file("./resources/index.xml");
+    if (!file.open(QIODevice::ReadOnly) || !doc.setContent(&file)) emit failed();
     QDomNodeList bookItem = doc.elementsByTagName("BookItem");
     for (int i = 0, j = 0; i < bookItem.size(); ++i)
     {

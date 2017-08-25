@@ -23,7 +23,6 @@ public:
 
 public slots:
     bool extractFileList();
-    void setVersion(qint32 first, qint32 mid, qint32 last);
     void clean();
 
 signals:
@@ -36,7 +35,6 @@ private:
     bool extractAll(QuaZip &zip, const QString &dir, QString filePwd);
     QString extractFile(QuaZip &zip, QString fileName, QString fileDest, QString filePwd);
     bool extractFile(QuaZip* zip, QString fileName, QString fileDest, QString filePwd);
-    bool removeFile(QStringList listFile);
 
     qint32 zipVersion, zipNewVersion, bookID;
 };
