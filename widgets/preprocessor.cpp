@@ -9,7 +9,7 @@ void Preprocessor::load(qint32 zipVersion, qint32 zipNewVersion, qint32 bookID)
     {
         QDomDocument doc;
         QFile file("./resources/index.xml");
-        if (not file.open(QIODevice::ReadOnly) || !doc.setContent(&file)) {emit failed();}
+        if (not file.open(QIODevice::ReadOnly) || not doc.setContent(&file)) {emit failed();}
         QDomNodeList bookItem = doc.elementsByTagName("BookItem");
         if (bookItem.item(0).firstChildElement("BookID").text().toInt() != bookID)
         {

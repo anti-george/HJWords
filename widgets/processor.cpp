@@ -144,7 +144,7 @@ void Processor::receiveText(QString text)
                 }
                 else
                 {
-                    for (int i = 0; i < 4; ++i) list << dict[random[i]][0];
+                    for (int i = 0; i < 4; ++i) {list << dict[random[i]][0];}
                     QString text = tr("Bonus! Simply choose %1.").arg(dict[target][0]);
                     list << text << dict[target][0];
                 }

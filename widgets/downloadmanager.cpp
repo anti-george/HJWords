@@ -10,7 +10,7 @@ void DownloadManager::append(const QStringList &urlList)
 void DownloadManager::append(const QUrl &url)
 {
     if (downloadQueue.isEmpty())
-        QTimer::singleShot(0, this, SLOT(downloadNext()));
+    {QTimer::singleShot(0, this, SLOT(downloadNext()));}
     downloadQueue.enqueue(url);
     ++totalCount;
 }
