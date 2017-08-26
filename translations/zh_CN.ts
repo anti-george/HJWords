@@ -46,12 +46,12 @@
     </message>
     <message>
         <location filename="../widgets/preprocessor.cpp" line="36"/>
-        <source>Downloading ...</source>
+        <source>Downloading...</source>
         <translation>正在下载……</translation>
     </message>
     <message>
         <location filename="../widgets/preprocessor.cpp" line="51"/>
-        <source>Configuring ...</source>
+        <source>Configuring...</source>
         <translation>正在配置……</translation>
     </message>
     <message>
@@ -71,8 +71,83 @@
     </message>
     <message>
         <location filename="../widgets/preprocessor.cpp" line="96"/>
-        <source>An error has occurred ...</source>
+        <source>An error has occurred...</source>
         <translation>发生了错误……</translation>
+    </message>
+</context>
+<context>
+    <name>Processor</name>
+    <message>
+        <location filename="../widgets/processor.cpp" line="13"/>
+        <source>Peaceful</source>
+        <translation>和平</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="13"/>
+        <source>Easy</source>
+        <translation>简单</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="13"/>
+        <source>Hard</source>
+        <translation>困难</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="13"/>
+        <source>Explosive</source>
+        <translation>炸裂</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="14"/>
+        <source>Here are some options!</source>
+        <translation>这里有几个选项！</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="28"/>
+        <source>NO!!!</source>
+        <translation>不！！！</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="28"/>
+        <location filename="../widgets/processor.cpp" line="79"/>
+        <source>Looks incorrect...</source>
+        <translation>看起来不太对劲……</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="33"/>
+        <source>Yeah!</source>
+        <translation>好！</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="33"/>
+        <source>Once again?</source>
+        <translation>再来一次？</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="51"/>
+        <location filename="../widgets/processor.cpp" line="95"/>
+        <source>Submit</source>
+        <translation>提交</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="51"/>
+        <source>Now, choose the textbook!</source>
+        <translation>现在，选择一张词表！</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="66"/>
+        <source>Looks like everything is over...</source>
+        <translation>看起来全都完了……</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="73"/>
+        <source>Splendid explosion!</source>
+        <translation>词库炸咯！</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="141"/>
+        <source>Bonus! Simply choose %1.</source>
+        <translation>奖励！选 %1 就行了。</translation>
     </message>
 </context>
 <context>

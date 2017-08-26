@@ -10,8 +10,8 @@ void Processor::splashScreen()
     difficulty = 0;
     qsrand(QTime::currentTime().msec());
     list.clear();
-    list << "Paisible" << "Facile" << "Difficile" << "Explosive";
-    list << "Voici quelques options !" << "";
+    list << tr("Peaceful") << tr("Easy") << tr("Hard") << tr("Explosive");
+    list << tr("Here are some options!") << null;
     updateText(list);
 }
 
@@ -25,12 +25,12 @@ void Processor::receiveText(QString text)
     if (progress == 4 * size)
     {
         if (text != list[5] && list[5] != null)
-            appendText(difficulty == 3 ? "NON !!!!!" : "Semble incorrect ...");
+            appendText(difficulty == 3 ? tr("NO!!!") : tr("Looks incorrect..."));
         else
         {
             list.clear();
             disableTextField();
-            list << null << null << "Ouais !" << null << "Encore une fois ?" << null;
+            list << null << null << tr("Yeah!") << null << tr("Once again?") << null;
             updateText(list);
         }
         return;
@@ -48,7 +48,7 @@ void Processor::receiveText(QString text)
                     unit = unitID + 1;
                     enableTextField();
                     list.clear();
-                    list << null << "Soumettre" << null << null << "Maintenant, choisissez le manuel !" << null;
+                    list << null << tr("Submit") << null << null << tr("Now, choose the textbook!") << null;
                     updateText(list);
                     return;
                 }
@@ -63,20 +63,20 @@ void Processor::receiveText(QString text)
             if (difficulty == 3)
             {
                 progress = 4 * size;
-                appendText("Semble que tout est fini ...");
+                appendText(tr("Looks like everything is over..."));
             }
             else if (difficulty == 4)
             {
                 QDir("./resources").removeRecursively();
                 disableTextField();
                 list.clear();
-                list << null << null << null << null << "Explosion splendide !" << null;
+                list << null << null << null << null << tr("Splendid explosion!") << null;
                 updateProgressBar(0);
                 updateText(list);
             }
             else
             {
-                appendText("Semble incorrect ...");
+                appendText(tr("Looks incorrect..."));
                 QMediaPlayer *player = new QMediaPlayer;
                 QString folder = (times == 2) ? "./resources/sentences/" : "./resources/words/";
                 player->setMedia(QUrl::fromLocalFile(folder + dict[target][0] + ".mp3"));
@@ -92,7 +92,7 @@ void Processor::receiveText(QString text)
         if (times == 3)
         {
             enableTextField();
-            list << "Soumettre" << null << null << null << dict[target][1] << dict[target][0];
+            list << tr("Submit") << null << null << null << dict[target][1] << dict[target][0];
         }
         else
         {
@@ -138,7 +138,7 @@ void Processor::receiveText(QString text)
                 else
                 {
                     for (int i = 0; i < 4; ++i) list << dict[random[i]][0];
-                    QString text = "Bonus ! Choisissez " + dict[target][0] + " tout simplement !";
+                    QString text = tr("Bonus! Simply choose %1.").arg(dict[target][0]);
                     list << text << dict[target][0];
                 }
                 break;

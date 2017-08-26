@@ -42,22 +42,22 @@
     <message>
         <location filename="../widgets/preprocessor.cpp" line="36"/>
         <source>HJWords - Resources Exploded :(</source>
-        <translation>HJWords - Ressources explosées :(</translation>
+        <translation>HJMots - Ressources explosées :(</translation>
     </message>
     <message>
         <location filename="../widgets/preprocessor.cpp" line="36"/>
-        <source>Downloading ...</source>
+        <source>Downloading...</source>
         <translation>Téléchargant ...</translation>
     </message>
     <message>
         <location filename="../widgets/preprocessor.cpp" line="51"/>
-        <source>Configuring ...</source>
+        <source>Configuring...</source>
         <translation>Configurant ...</translation>
     </message>
     <message>
         <location filename="../widgets/preprocessor.cpp" line="88"/>
         <source>HJWords - Excited Word Tank</source>
-        <translation>HJWords - Tank des Mots Excités</translation>
+        <translation>HJMots - Tank des Mots Excités</translation>
     </message>
     <message>
         <location filename="../widgets/preprocessor.cpp" line="89"/>
@@ -71,8 +71,83 @@
     </message>
     <message>
         <location filename="../widgets/preprocessor.cpp" line="96"/>
-        <source>An error has occurred ...</source>
+        <source>An error has occurred...</source>
         <translation>Une erreur s&apos;est produite ...</translation>
+    </message>
+</context>
+<context>
+    <name>Processor</name>
+    <message>
+        <location filename="../widgets/processor.cpp" line="13"/>
+        <source>Peaceful</source>
+        <translation>Paisible</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="13"/>
+        <source>Easy</source>
+        <translation>Facile</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="13"/>
+        <source>Hard</source>
+        <translation>Difficile</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="13"/>
+        <source>Explosive</source>
+        <translation>Explosive</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="14"/>
+        <source>Here are some options!</source>
+        <translation>Voici quelques options !</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="28"/>
+        <source>NO!!!</source>
+        <translation>NON !!!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="28"/>
+        <location filename="../widgets/processor.cpp" line="79"/>
+        <source>Looks incorrect...</source>
+        <translation>Semble incorrect ...</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="33"/>
+        <source>Yeah!</source>
+        <translation>Ouais !</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="33"/>
+        <source>Once again?</source>
+        <translation>Encore une fois ?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="51"/>
+        <location filename="../widgets/processor.cpp" line="95"/>
+        <source>Submit</source>
+        <translation>Soumettre</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="51"/>
+        <source>Now, choose the textbook!</source>
+        <translation>Maintenant, choisissez le manuel !</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="66"/>
+        <source>Looks like everything is over...</source>
+        <translation>Semble que tout est fini ...</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="73"/>
+        <source>Splendid explosion!</source>
+        <translation>Explosion splendide !</translation>
+    </message>
+    <message>
+        <location filename="../widgets/processor.cpp" line="141"/>
+        <source>Bonus! Simply choose %1.</source>
+        <translation>Bonus ! Choisissez %1 tout simplement.</translation>
     </message>
 </context>
 <context>
@@ -81,7 +156,7 @@
         <location filename="../layout/main.qml" line="9"/>
         <location filename="../layout/main.qml" line="18"/>
         <source>HJWords</source>
-        <translation></translation>
+        <translation>HJMots</translation>
     </message>
     <message>
         <location filename="../layout/main.qml" line="15"/>

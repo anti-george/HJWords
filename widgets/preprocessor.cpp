@@ -33,7 +33,7 @@ void Preprocessor::load(qint32 zipVersion, qint32 zipNewVersion, qint32 bookID)
 
 void Preprocessor::loadFirstPart()
 {
-    appendDebugText(tr("HJWords - Resources Exploded :(") + "\n" + tr("Downloading ..."));
+    appendDebugText(tr("HJWords - Resources Exploded :(") + "\n" + tr("Downloading..."));
     DownloadManager *manager = new DownloadManager;
     Deobfuscator *deobfs = new Deobfuscator(first, mid, last);
     connect(manager, SIGNAL(progress(qint64, qint64)), this, SLOT(progress(qint64, qint64)));
@@ -48,7 +48,7 @@ void Preprocessor::loadFirstPart()
 
 void Preprocessor::loadMidPart()
 {
-    appendDebugText(tr("Configuring ...") + "\n");
+    appendDebugText(tr("Configuring...") + "\n");
     QThread *thread = new QThread;
     Deobfuscator *deobfs = new Deobfuscator(first, mid, last);
     deobfs->moveToThread(thread);
@@ -93,6 +93,6 @@ void Preprocessor::printHeader()
 
 void Preprocessor::pause()
 {
-    appendDebugText(tr("An error has occurred ..."));
+    appendDebugText(tr("An error has occurred..."));
     return;
 }
