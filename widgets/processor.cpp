@@ -46,7 +46,7 @@ void Processor::receiveText(QString text)
     {
         if (not progress)
         {
-            if (not difficulty) {for (int i = 1; i < 5; ++i) {if (list[i - 1] == text) difficulty = i;}}
+            if (not difficulty) {for (int i = 1; i < 5; ++i) {if (list[i - 1] == text) {difficulty = i;}}}
 
             if (difficulty == 1)
             {

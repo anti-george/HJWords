@@ -12,13 +12,13 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QTranslator translator;
-    if (translator.load(QLocale::system().name(), ":/")) app.installTranslator(&translator);
+    if (translator.load(QLocale::system().name(), ":/")) {app.installTranslator(&translator);}
 
     Layer layer;
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("compatibility", &layer);
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
-    if (engine.rootObjects().isEmpty()) return -1;
+    if (engine.rootObjects().isEmpty()) {return -1;}
 
     Processor processor;
     Preprocessor preprocessor;

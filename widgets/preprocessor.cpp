@@ -9,7 +9,7 @@ void Preprocessor::load(qint32 zipVersion, qint32 zipNewVersion, qint32 bookID)
     {
         QDomDocument doc;
         QFile file("./resources/index.xml");
-        if (!file.open(QIODevice::ReadOnly) || !doc.setContent(&file)) emit failed();
+        if (not file.open(QIODevice::ReadOnly) || !doc.setContent(&file)) {emit failed();}
         QDomNodeList bookItem = doc.elementsByTagName("BookItem");
         if (bookItem.item(0).firstChildElement("BookID").text().toInt() != bookID)
         {
@@ -77,8 +77,8 @@ void Preprocessor::loadLastPart()
 void Preprocessor::progress(qint64 received, qint64 total)
 {
     double percentage = 1.0 * received / total;
-    if (status < 0.05) status = percentage * 0.05;
-    else if (status < 0.25) status = 0.05 + percentage * 0.2;
+    if (status < 0.05) {status = percentage * 0.05;}
+    else if (status < 0.25) {status = 0.05 + percentage * 0.2;}
     else status = 0.25 + percentage * 0.75;
     emit updateDebugBar(status);
 }
