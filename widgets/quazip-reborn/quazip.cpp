@@ -283,7 +283,7 @@ bool QuaZip::open(Mode mode, zlib_filefunc_def* ioApi)
             return true;
         } else {
             p->zipError=UNZ_OPENERROR;
-            if (!p->zipName.isEmpty()) {delete ioDevice;}
+            if (not p->zipName.isEmpty()) {delete ioDevice;}
             return false;
         }
     default:
@@ -404,7 +404,7 @@ bool QuaZip::setCurrentFile(const QString& fileName, CaseSensitivity cs)
     // Find the file by name
     bool sens = convertCaseSensitivity(cs) == Qt::CaseSensitive;
     QString lower, current;
-    if (not sens) lower = fileName.toLower();
+    if (not sens) {lower = fileName.toLower();}
     p->hasCurrentFile_f = false;
 
     // Check the appropriate Map
@@ -679,9 +679,9 @@ bool QuaZipPrivate::getFileInfoList(QList<TFileInfo> *result) const
     }
     if (zipError != UNZ_OK) {return false;}
     if (currentFile.isEmpty()) {
-        if (!q->goToFirstFile()) {return false;}
+        if (not q->goToFirstFile()) {return false;}
     } else {
-        if (!q->setCurrentFile(currentFile)) {return false;}
+        if (not q->setCurrentFile(currentFile)) {return false;}
     }
     return true;
 }

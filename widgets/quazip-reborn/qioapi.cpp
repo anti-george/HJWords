@@ -259,7 +259,7 @@ int ZCALLBACK qiodevice64_seek_file_func (
     default:
         return -1;
     }
-    ret = !iodevice->seek(qiodevice_seek_result);
+    ret = not iodevice->seek(qiodevice_seek_result);
     return ret;
 }
 
