@@ -57,4 +57,4 @@ TRANSLATIONS += \
     translations/fr_FR.ts \
     translations/zh_CN.ts
 
-win32: RC_ICONS = $$PWD/android/icon/icon.png
+win32: RC_ICONS = $$PWD/android/icon/icon.ico
