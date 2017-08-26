@@ -7,8 +7,8 @@ using namespace std;
 */
 
 class QuaZipFilePrivate {
-  friend class QuaZipFile;
-  private:
+    friend class QuaZipFile;
+    private:
     Q_DISABLE_COPY(QuaZipFilePrivate)
     /// The pointer to the associated QuaZipFile instance.
     QuaZipFile *q;
@@ -370,7 +370,7 @@ bool QuaZipFile::atEnd() const
         qWarning("QuaZipFile::atEnd(): call setZipName() or setZip() first");
         return false;
     }
-    if (!isOpen())
+    if (not isOpen())
     {
         qWarning("QuaZipFile::atEnd(): file is not open");
         return false;

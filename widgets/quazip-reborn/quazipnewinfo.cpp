@@ -15,24 +15,15 @@ static void QuaZipNewInfo_setPermissions(QuaZipNewInfo *info,
 #endif
     }
 
-    if ((perm & QFile::ReadOwner) != 0)
-        uPerm |= 0400;
-    if ((perm & QFile::WriteOwner) != 0)
-        uPerm |= 0200;
-    if ((perm & QFile::ExeOwner) != 0)
-        uPerm |= 0100;
-    if ((perm & QFile::ReadGroup) != 0)
-        uPerm |= 0040;
-    if ((perm & QFile::WriteGroup) != 0)
-        uPerm |= 0020;
-    if ((perm & QFile::ExeGroup) != 0)
-        uPerm |= 0010;
-    if ((perm & QFile::ReadOther) != 0)
-        uPerm |= 0004;
-    if ((perm & QFile::WriteOther) != 0)
-        uPerm |= 0002;
-    if ((perm & QFile::ExeOther) != 0)
-        uPerm |= 0001;
+    if ((perm & QFile::ReadOwner) != 0) {uPerm |= 0400;}
+    if ((perm & QFile::WriteOwner) != 0) {uPerm |= 0200;}
+    if ((perm & QFile::ExeOwner) != 0) {uPerm |= 0100;}
+    if ((perm & QFile::ReadGroup) != 0) {uPerm |= 0040;}
+    if ((perm & QFile::WriteGroup) != 0) {uPerm |= 0020;}
+    if ((perm & QFile::ExeGroup) != 0) {uPerm |= 0010;}
+    if ((perm & QFile::ReadOther) != 0) {uPerm |= 0004;}
+    if ((perm & QFile::WriteOther) != 0) {uPerm |= 0002;}
+    if ((perm & QFile::ExeOther) != 0) {uPerm |= 0001;}
     info->externalAttr = (info->externalAttr & ~0xFFFF0000u) | (uPerm << 16);
 }
 
@@ -60,30 +51,29 @@ QuaZipNewInfo::QuaZipNewInfo(const QuaZipFileInfo64 &existing)
 }
 
 QuaZipNewInfo::QuaZipNewInfo(const QString& name):
-  name(name), dateTime(QDateTime::currentDateTime()), internalAttr(0), externalAttr(0),
-  uncompressedSize(0)
+    name(name), dateTime(QDateTime::currentDateTime()), internalAttr(0), externalAttr(0),
+    uncompressedSize(0)
 {
 }
 
 QuaZipNewInfo::QuaZipNewInfo(const QString& name, const QString& file):
-  name(name), internalAttr(0), externalAttr(0), uncompressedSize(0)
+    name(name), internalAttr(0), externalAttr(0), uncompressedSize(0)
 {
-  QFileInfo info(file);
-  QDateTime lm = info.lastModified();
-  if (!info.exists()) {
-    dateTime = QDateTime::currentDateTime();
-  } else {
-    dateTime = lm;
-    QuaZipNewInfo_setPermissions(this, info.permissions(), info.isDir(), info.isSymLink());
-  }
+    QFileInfo info(file);
+    QDateTime lm = info.lastModified();
+    if (not info.exists()) {
+        dateTime = QDateTime::currentDateTime();
+    } else {
+        dateTime = lm;
+        QuaZipNewInfo_setPermissions(this, info.permissions(), info.isDir(), info.isSymLink());
+    }
 }
 
 void QuaZipNewInfo::setFileDateTime(const QString& file)
 {
-  QFileInfo info(file);
-  QDateTime lm = info.lastModified();
-  if (info.exists())
-    dateTime = lm;
+    QFileInfo info(file);
+    QDateTime lm = info.lastModified();
+    if (info.exists()) {dateTime = lm;}
 }
 
 void QuaZipNewInfo::setFilePermissions(const QString &file)
@@ -101,7 +91,7 @@ void QuaZipNewInfo::setPermissions(QFile::Permissions permissions)
 void QuaZipNewInfo::setFileNTFSTimes(const QString &fileName)
 {
     QFileInfo fi(fileName);
-    if (!fi.exists()) {
+    if (not fi.exists()) {
         qWarning("QuaZipNewInfo::setFileNTFSTimes(): '%s' doesn't exist",
                  fileName.toUtf8().constData());
         return;

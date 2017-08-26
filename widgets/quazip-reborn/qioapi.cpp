@@ -30,38 +30,31 @@
 voidpf call_zopen64 (const zlib_filefunc64_32_def* pfilefunc,voidpf file,int mode)
 {
     if (pfilefunc->zfile_func64.zopen64_file != NULL)
-        return (*(pfilefunc->zfile_func64.zopen64_file)) (pfilefunc->zfile_func64.opaque,file,mode);
-    else
-    {
-        return (*(pfilefunc->zopen32_file))(pfilefunc->zfile_func64.opaque,file,mode);
-    }
+    {return (*(pfilefunc->zfile_func64.zopen64_file)) (pfilefunc->zfile_func64.opaque,file,mode);}
+    else {return (*(pfilefunc->zopen32_file))(pfilefunc->zfile_func64.opaque,file,mode);}
 }
 
 int call_zseek64 (const zlib_filefunc64_32_def* pfilefunc,voidpf filestream, ZPOS64_T offset, int origin)
 {
     if (pfilefunc->zfile_func64.zseek64_file != NULL)
-        return (*(pfilefunc->zfile_func64.zseek64_file)) (pfilefunc->zfile_func64.opaque,filestream,offset,origin);
+    {return (*(pfilefunc->zfile_func64.zseek64_file)) (pfilefunc->zfile_func64.opaque,filestream,offset,origin);}
     else
     {
         uLong offsetTruncated = (uLong)offset;
-        if (offsetTruncated != offset)
-            return -1;
-        else
-            return (*(pfilefunc->zseek32_file))(pfilefunc->zfile_func64.opaque,filestream,offsetTruncated,origin);
+        if (offsetTruncated != offset) {return -1;}
+        else return (*(pfilefunc->zseek32_file))(pfilefunc->zfile_func64.opaque,filestream,offsetTruncated,origin);
     }
 }
 
 ZPOS64_T call_ztell64 (const zlib_filefunc64_32_def* pfilefunc,voidpf filestream)
 {
     if (pfilefunc->zfile_func64.zseek64_file != NULL)
-        return (*(pfilefunc->zfile_func64.ztell64_file)) (pfilefunc->zfile_func64.opaque,filestream);
+    {return (*(pfilefunc->zfile_func64.ztell64_file)) (pfilefunc->zfile_func64.opaque,filestream);}
     else
     {
         uLong tell_uLong = (*(pfilefunc->ztell32_file))(pfilefunc->zfile_func64.opaque,filestream);
-        if ((tell_uLong) == ((uLong)-1))
-            return (ZPOS64_T)-1;
-        else
-            return tell_uLong;
+        if ((tell_uLong) == ((uLong)-1)) {return (ZPOS64_T)-1;}
+        else return tell_uLong;
     }
 }
 
@@ -84,26 +77,26 @@ voidpf ZCALLBACK qiodevice_open_file_func (
     QIODevice *iodevice = reinterpret_cast<QIODevice*>(file);
     QIODevice::OpenMode desiredMode;
     if ((mode & ZLIB_FILEFUNC_MODE_READWRITEFILTER)==ZLIB_FILEFUNC_MODE_READ)
-        desiredMode = QIODevice::ReadOnly;
+    {desiredMode = QIODevice::ReadOnly;}
     else if (mode & ZLIB_FILEFUNC_MODE_EXISTING)
-        desiredMode = QIODevice::ReadWrite;
+    {desiredMode = QIODevice::ReadWrite;}
     else if (mode & ZLIB_FILEFUNC_MODE_CREATE)
-        desiredMode = QIODevice::WriteOnly;
+    {desiredMode = QIODevice::WriteOnly;}
     if (iodevice->isOpen()) {
         if ((iodevice->openMode() & desiredMode) == desiredMode) {
-            if (desiredMode != QIODevice::WriteOnly
-                    && iodevice->isSequential()) {
+            if (desiredMode != QIODevice::WriteOnly && iodevice->isSequential())
+            {
                 // We can use sequential devices only for writing.
                 delete d;
                 return NULL;
-            } else {
-                if ((desiredMode & QIODevice::WriteOnly) != 0) {
+            }
+            else
+            {
+                if ((desiredMode & QIODevice::WriteOnly) != 0)
+                {
                     // open for writing, need to seek existing device
-                    if (!iodevice->isSequential()) {
-                        iodevice->seek(0);
-                    } else {
-                        d->pos = iodevice->pos();
-                    }
+                    if (not iodevice->isSequential()) {iodevice->seek(0);}
+                    else {d->pos = iodevice->pos();}
                 }
             }
             return iodevice;
@@ -229,15 +222,15 @@ int ZCALLBACK qiodevice_seek_file_func (
     default:
         return -1;
     }
-    ret = !iodevice->seek(qiodevice_seek_result);
+    ret = not iodevice->seek(qiodevice_seek_result);
     return ret;
 }
 
 int ZCALLBACK qiodevice64_seek_file_func (
-   voidpf /*opaque UNUSED*/,
-   voidpf stream,
-   ZPOS64_T offset,
-   int origin)
+    voidpf /*opaque UNUSED*/,
+    voidpf stream,
+    ZPOS64_T offset,
+    int origin)
 {
     QIODevice *iodevice = reinterpret_cast<QIODevice*>(stream);
     if (iodevice->isSequential()) {
