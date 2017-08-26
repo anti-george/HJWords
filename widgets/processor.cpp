@@ -20,12 +20,19 @@ void Processor::receiveText(QString text)
     qsrand(QTime::currentTime().msec());
 
     for (int i = remain.size() - 1; i >= 0; --i)
-        if (remain[i] > 4 * size) remain.erase(remain.begin() + i);
+    {
+        if (remain[i] > 4 * size)
+        {
+            remain.erase(remain.begin() + i);
+        }
+    }
 
     if (progress == 4 * size)
     {
         if (text != list[5] && list[5] != null)
+        {
             appendText(difficulty == 3 ? tr("NO!!!") : tr("Looks incorrect..."));
+        }
         else
         {
             list.clear();
@@ -37,13 +44,13 @@ void Processor::receiveText(QString text)
     }
     else
     {
-        if (!progress)
+        if (not progress)
         {
-            if (!difficulty) for (int i = 1; i < 5; ++i) if (list[i - 1] == text) difficulty = i;
+            if (not difficulty) {for (int i = 1; i < 5; ++i) {if (list[i - 1] == text) difficulty = i;}}
 
             if (difficulty == 1)
             {
-                if (!unit)
+                if (not unit)
                 {
                     unit = unitID + 1;
                     enableTextField();
@@ -105,20 +112,20 @@ void Processor::receiveText(QString text)
                 {
                     bool right = true;
                     qint32 num = qrand() % size;
-                    for (qint32 item : random) if (item == num) right = false;
-                    if (right) random.append(num);
+                    for (qint32 item : random) {right = (item == num) ? false : true;}
+                    if (right) {random.append(num);}
                 }
-                if (random[0] == target || random[1] == target) break;
-                if (random[2] == target || random[3] == target) break;
+                if (random[0] == target || random[1] == target) {break;}
+                if (random[2] == target || random[3] == target) {break;}
             }
             switch (times)
             {
             case 0:
-                for (int i = 0; i < 4; ++i) list << dict[random[i]][1];
+                for (int i = 0; i < 4; ++i) {list << dict[random[i]][1];}
                 list << dict[target][times] << dict[target][1];
                 break;
             case 1:
-                for (int i = 0; i < 4; ++i) list << dict[random[i]][0];
+                for (int i = 0; i < 4; ++i) {list << dict[random[i]][0];}
                 list << dict[target][times] << dict[target][0];
                 break;
             case 2:
@@ -130,7 +137,7 @@ void Processor::receiveText(QString text)
                     sentence.replace(regex, "________");
                     for (int i = 0; i < 4; ++i)
                     {
-                        if (random[i] == target) list << word;
+                        if (random[i] == target) {list << word;}
                         else list << dict[random[i]][0];
                     }
                     list << sentence << word;
@@ -157,13 +164,13 @@ void Processor::createTempDict()
     QVector<qint32> temp;
     QDomDocument doc;
     QFile file("./resources/index.xml");
-    if (!file.open(QIODevice::ReadOnly) || !doc.setContent(&file)) emit failed();
+    if (not file.open(QIODevice::ReadOnly) || not doc.setContent(&file)) {emit failed();}
     QDomNodeList bookItem = doc.elementsByTagName("BookItem");
     for (int i = 0, j = 0; i < bookItem.size(); ++i)
     {
         QDomNode node = bookItem.item(i);
         QStringList tempList;
-        if (node.firstChildElement("UnitID").text().toInt() != unit) continue;
+        if (node.firstChildElement("UnitID").text().toInt() != unit) {continue;}
         tempList << node.firstChildElement("Word").text();
         tempList << decrypt(node.firstChildElement("WordDef").text());
         tempList << decrypt(node.firstChildElement("Sentence").text()) + "\n" +
@@ -179,7 +186,7 @@ void Processor::createTempDict()
     {
         qint32 random = qrand() % temp.size();
         remain.append(temp[random]);
-        if (temp[random] < (size << 1) + size) temp[random] += size;
+        if (temp[random] < (size << 1) + size) {temp[random] += size;}
         else temp.erase(temp.begin() + random);
     }
 }
@@ -187,7 +194,7 @@ void Processor::createTempDict()
 QString Processor::decrypt(QString str)
 {
     QString std = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    for (int i = 0; i < str.length(); ++i) str[i] = std[0x3f - std.indexOf(str[i])];
+    for (int i = 0; i < str.length(); ++i) {str[i] = std[0x3f - std.indexOf(str[i])];}
     return QString::fromUtf8(QByteArray::fromBase64(str.toUtf8()));
 }
 

@@ -4,7 +4,7 @@ DownloadManager::DownloadManager(QObject *parent) : QObject(parent) {}
 
 void DownloadManager::append(const QStringList &urlList)
 {
-    foreach (QString url, urlList) append(QUrl::fromEncoded(url.toLocal8Bit()));
+    foreach (QString url, urlList) {append(QUrl::fromEncoded(url.toLocal8Bit()));}
 }
 
 void DownloadManager::append(const QUrl &url)
@@ -19,7 +19,7 @@ void DownloadManager::downloadNext()
 {
     if (downloadQueue.isEmpty())
     {
-        if (downloadedCount != totalCount) emit failed();
+        if (downloadedCount != totalCount) {emit failed();}
         else emit finished();
         return;
     }
@@ -27,7 +27,7 @@ void DownloadManager::downloadNext()
     QUrl url = downloadQueue.dequeue();
     QString filename = QFileInfo(url.path()).fileName();
     output.setFileName(filename);
-    if (!output.open(QIODevice::WriteOnly)) {emit failed(); return;}
+    if (not output.open(QIODevice::WriteOnly)) {emit failed(); return;}
 
     QNetworkRequest request(url);
     currentDownload = manager.get(request);

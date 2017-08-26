@@ -99,7 +99,7 @@ QStringList Deobfuscator::getUrlList()
 bool Deobfuscator::extractFileList()
 {
     QStringList args = getFileList(), dir {"./audio", "./", "./audio/sentences"};
-    for (int i = 0; i < 3; ++i) if (not extractAll(args[i], dir[i])) {failed(); return false;}
+    for (int i = 0; i < 3; ++i) {if (not extractAll(args[i], dir[i])) {failed(); return false;}}
     finished(); return true;
 }
 
@@ -114,7 +114,7 @@ void Deobfuscator::clean()
         QDomNode node = bookItem.item(i);
         QDomElement from = node.firstChildElement("WordID");
         QDomElement to = node.firstChildElement("Word");
-        if (from.isNull() || to.isNull()) continue;
+        if (from.isNull() || to.isNull()) {continue;}
         QStringList folders {"./audio/words/", "./audio/sentences/"};
         for (QString folder : folders)
         {
