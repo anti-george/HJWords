@@ -4,27 +4,27 @@
 <context>
     <name>DebugPageForm.ui</name>
     <message>
-        <location filename="../layout/DebugPageForm.ui.qml" line="39"/>
+        <location filename="../layout/DebugPageForm.ui.qml" line="46"/>
         <source>FR</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../layout/DebugPageForm.ui.qml" line="45"/>
+        <location filename="../layout/DebugPageForm.ui.qml" line="40"/>
         <source>DE</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../layout/DebugPageForm.ui.qml" line="51"/>
+        <location filename="../layout/DebugPageForm.ui.qml" line="52"/>
         <source>JP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../layout/DebugPageForm.ui.qml" line="57"/>
+        <location filename="../layout/DebugPageForm.ui.qml" line="58"/>
         <source>RU</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../layout/DebugPageForm.ui.qml" line="63"/>
+        <location filename="../layout/DebugPageForm.ui.qml" line="64"/>
         <source>ES</source>
         <translation></translation>
     </message>
@@ -103,49 +103,49 @@
         <translation>Voici quelques options !</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="28"/>
+        <location filename="../widgets/processor.cpp" line="34"/>
         <source>NO!!!</source>
         <translation>NON !!!</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="28"/>
-        <location filename="../widgets/processor.cpp" line="79"/>
+        <location filename="../widgets/processor.cpp" line="34"/>
+        <location filename="../widgets/processor.cpp" line="86"/>
         <source>Looks incorrect...</source>
         <translation>Semble incorrect ...</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="33"/>
+        <location filename="../widgets/processor.cpp" line="40"/>
         <source>Yeah!</source>
         <translation>Ouais !</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="33"/>
+        <location filename="../widgets/processor.cpp" line="40"/>
         <source>Once again?</source>
         <translation>Encore une fois ?</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="51"/>
-        <location filename="../widgets/processor.cpp" line="95"/>
+        <location filename="../widgets/processor.cpp" line="58"/>
+        <location filename="../widgets/processor.cpp" line="100"/>
         <source>Submit</source>
         <translation>Soumettre</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="51"/>
+        <location filename="../widgets/processor.cpp" line="58"/>
         <source>Now, choose the textbook!</source>
         <translation>Maintenant, choisissez le manuel !</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="66"/>
+        <location filename="../widgets/processor.cpp" line="73"/>
         <source>Looks like everything is over...</source>
         <translation>Semble que tout est fini ...</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="73"/>
+        <location filename="../widgets/processor.cpp" line="80"/>
         <source>Splendid explosion!</source>
         <translation>Explosion splendide !</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="141"/>
+        <location filename="../widgets/processor.cpp" line="146"/>
         <source>Bonus! Simply choose %1.</source>
         <translation>Bonus ! Choisissez %1 tout simplement.</translation>
     </message>

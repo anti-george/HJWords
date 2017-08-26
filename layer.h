@@ -20,6 +20,7 @@ signals:
     void enableTextField();
     void disableTextField();
     void setUnitID(qint32 num);
+    void playAudio(QString url);
     void load(qint32 zipVersion, qint32 zipNewVersion, qint32 bookID);
     qint32 getUnitID();
 };

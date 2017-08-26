@@ -1,5 +1,5 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.1
+import QtQuick 2.8
+import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 Item {
@@ -34,15 +34,16 @@ Item {
             width: 100
             height: 100
 
-            Button {
-                id: frenchButton
-                text: qsTr("FR")
-                Layout.fillWidth: true
-            }
 
             Button {
                 id: germanButton
                 text: qsTr("DE")
+                Layout.fillWidth: true
+            }
+
+            Button {
+                id: frenchButton
+                text: qsTr("FR")
                 Layout.fillWidth: true
             }
 

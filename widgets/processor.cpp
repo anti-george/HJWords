@@ -84,10 +84,8 @@ void Processor::receiveText(QString text)
             else
             {
                 appendText(tr("Looks incorrect..."));
-                QMediaPlayer *player = new QMediaPlayer;
                 QString folder = (times == 2) ? "./resources/sentences/" : "./resources/words/";
-                player->setMedia(QUrl::fromLocalFile(folder + dict[target][0] + ".mp3"));
-                player->play();
+                playAudio(QUrl::fromLocalFile(folder + dict[target][0] + ".mp3").toString());
             }
             return;
         }
@@ -112,7 +110,7 @@ void Processor::receiveText(QString text)
                 {
                     bool right = true;
                     qint32 num = qrand() % size;
-                    for (qint32 item : random) {right = (item == num) ? false : true;}
+                    for (qint32 item : random) {if (item == num) {right = false;}}
                     if (right) {random.append(num);}
                 }
                 if (random[0] == target || random[1] == target) {break;}

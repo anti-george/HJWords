@@ -1,4 +1,4 @@
-QT += qml quick multimedia network xml
+QT += qml quick network xml
 
 CONFIG += c++11
 

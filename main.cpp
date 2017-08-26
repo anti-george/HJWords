@@ -32,12 +32,14 @@ int main(int argc, char *argv[])
     QObject::connect(&processor, SIGNAL(updateText(QStringList)), &layer, SIGNAL(updateText(QStringList)));
     QObject::connect(&processor, SIGNAL(enableTextField()), &layer, SIGNAL(enableTextField()));
     QObject::connect(&processor, SIGNAL(disableTextField()), &layer, SIGNAL(disableTextField()));
+    QObject::connect(&processor, SIGNAL(playAudio(QString)), &layer, SIGNAL(playAudio(QString)));
     QObject::connect(&processor, SIGNAL(updateProgressBar(double)), &layer, SIGNAL(updateProgressBar(double)));
 
     QObject::connect(&layer, SIGNAL(sendBackText(QString)), &processor, SLOT(receiveText(QString)));
     QObject::connect(&layer, SIGNAL(splashScreen()), &processor, SLOT(splashScreen()));
     QObject::connect(&layer, SIGNAL(setUnitID(qint32)), &processor, SLOT(setUnitID(qint32)));
     QObject::connect(&layer, SIGNAL(getUnitID()), &processor, SLOT(getUnitID()));
+
     QObject::connect(&layer, SIGNAL(load(qint32, qint32, qint32)), &preprocessor, SLOT(load(qint32, qint32, qint32)));
 
     return app.exec();

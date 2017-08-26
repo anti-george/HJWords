@@ -5,7 +5,6 @@
 #include <QVector>
 #include <QtXml>
 #include <QTime>
-#include <QMediaPlayer>
 
 class Processor : public QObject
 {
@@ -19,6 +18,7 @@ signals:
     void enableTextField();
     void disableTextField();
     void updateProgressBar(double);
+    void playAudio(QString);
     void failed();
 
 public slots:

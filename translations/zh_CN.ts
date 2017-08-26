@@ -4,27 +4,27 @@
 <context>
     <name>DebugPageForm.ui</name>
     <message>
-        <location filename="../layout/DebugPageForm.ui.qml" line="39"/>
+        <location filename="../layout/DebugPageForm.ui.qml" line="46"/>
         <source>FR</source>
         <translation>法</translation>
     </message>
     <message>
-        <location filename="../layout/DebugPageForm.ui.qml" line="45"/>
+        <location filename="../layout/DebugPageForm.ui.qml" line="40"/>
         <source>DE</source>
         <translation>德</translation>
     </message>
     <message>
-        <location filename="../layout/DebugPageForm.ui.qml" line="51"/>
+        <location filename="../layout/DebugPageForm.ui.qml" line="52"/>
         <source>JP</source>
         <translation>日</translation>
     </message>
     <message>
-        <location filename="../layout/DebugPageForm.ui.qml" line="57"/>
+        <location filename="../layout/DebugPageForm.ui.qml" line="58"/>
         <source>RU</source>
         <translation>俄</translation>
     </message>
     <message>
-        <location filename="../layout/DebugPageForm.ui.qml" line="63"/>
+        <location filename="../layout/DebugPageForm.ui.qml" line="64"/>
         <source>ES</source>
         <translation>西</translation>
     </message>
@@ -103,49 +103,49 @@
         <translation>这里有几个选项！</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="28"/>
+        <location filename="../widgets/processor.cpp" line="34"/>
         <source>NO!!!</source>
         <translation>不！！！</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="28"/>
-        <location filename="../widgets/processor.cpp" line="79"/>
+        <location filename="../widgets/processor.cpp" line="34"/>
+        <location filename="../widgets/processor.cpp" line="86"/>
         <source>Looks incorrect...</source>
         <translation>看起来不太对劲……</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="33"/>
+        <location filename="../widgets/processor.cpp" line="40"/>
         <source>Yeah!</source>
         <translation>好！</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="33"/>
+        <location filename="../widgets/processor.cpp" line="40"/>
         <source>Once again?</source>
         <translation>再来一次？</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="51"/>
-        <location filename="../widgets/processor.cpp" line="95"/>
+        <location filename="../widgets/processor.cpp" line="58"/>
+        <location filename="../widgets/processor.cpp" line="100"/>
         <source>Submit</source>
         <translation>提交</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="51"/>
+        <location filename="../widgets/processor.cpp" line="58"/>
         <source>Now, choose the textbook!</source>
         <translation>现在，选择一张词表！</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="66"/>
+        <location filename="../widgets/processor.cpp" line="73"/>
         <source>Looks like everything is over...</source>
         <translation>看起来全都完了……</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="73"/>
+        <location filename="../widgets/processor.cpp" line="80"/>
         <source>Splendid explosion!</source>
         <translation>词库炸咯！</translation>
     </message>
     <message>
-        <location filename="../widgets/processor.cpp" line="141"/>
+        <location filename="../widgets/processor.cpp" line="146"/>
         <source>Bonus! Simply choose %1.</source>
         <translation>奖励！选 %1 就行了。</translation>
     </message>

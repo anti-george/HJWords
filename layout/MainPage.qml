@@ -1,6 +1,12 @@
-import QtQuick 2.7
+import QtQuick 2.8
+import QtMultimedia 5.9
 
 MainPageForm {
+    Audio {
+        id: music
+        source: ""
+    }
+
     Connections {
         target: compatibility
         onAppendText: textArea.append(text)
@@ -19,6 +25,10 @@ MainPageForm {
         onEnableTextField: textField.enabled = true
         onDisableTextField: textField.enabled = false
         onUpdateProgressBar: progressBar.value = value
+        onPlayAudio: {
+            music.source = url
+            music.play()
+        }
     }
 
     button0.onClicked: {
