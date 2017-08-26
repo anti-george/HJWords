@@ -12,8 +12,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QTranslator translator;
-    if (translator.load(QLocale::system().name(), ":/"))
-        app.installTranslator(&translator);
+    if (translator.load(QLocale::system().name(), ":/")) app.installTranslator(&translator);
 
     Layer layer;
     QQmlApplicationEngine engine;
